@@ -1,1 +1,152 @@
+#You will need to convert the data in Supplemental Table 5 to an excel file and rename it as "CTree_masterlist" 
 
+library(readxl) 
+library(survival) 
+
+#Upload the original excel data to an R dataframe
+CTree_OSmaster <- read_excel('CTree_masterlist.xlsx') 
+
+#Create progression-free and overall survival datapoints
+CT_os <- with(CTree_OSmaster, Surv(CTree_OSmaster$Stime, CTree_OSmaster$alive)) 
+CT_pf <- with(CTree_OSmaster, Surv(CTree_OSmaster$Ptime, CTree_OSmaster$progression)) 
+
+#Calculate Hazard Ratios and p values with multivariate CoxPH function
+
+#CoxPh, thresholds from Cutoff Finder for OS
+Cox_CD3auto_OS_multi <- coxph(CT_os ~ CD3autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_HLA1auto_OS_multi <- coxph(CT_os ~ HLA1autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_PDL1auto_OS_multi <- coxph(CT_os ~ PDL1autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_LAG3auto_OS_multi <- coxph(CT_os ~ LAG3autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_TCRdauto_OS_multi <- coxph(CT_os ~ TCRdautoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_PD1auto_OS_multi <- coxph(CT_os ~ PD1autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_CD8auto_OS_multi <- coxph(CT_os ~ CD8autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+
+#CoxPh, thresholds from Cutoff Finder for PFS
+Cox_CD3auto_PF_multi <- coxph(CT_pf ~ CD3autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_HLA1auto_PF_multi <- coxph(CT_pf ~ HLA1autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_PDL1auto_PF_multi <- coxph(CT_pf ~ PDL1autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_LAG3auto_PF_multi <- coxph(CT_pf ~ LAG3autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_TCRdauto_PF_multi <- coxph(CT_pf ~ TCRdautoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_PD1auto_PF_multi <- coxph(CT_pf ~ PD1autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_CD8auto_PF_multi <- coxph(CT_pf ~ CD8autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+
+#CoxPh, thresholds from Literature for OS
+Cox_CD3my_OS_multi <- coxph(CT_os ~ CD3mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_HLA1my_OS_multi <- coxph(CT_os ~ HLA1mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_PDL1my_OS_multi <- coxph(CT_os ~ PDL1mythreshold5+ age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_LAG3my_OS_multi <- coxph(CT_os ~ LAG3mythreshold1 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_TCRdmy_OS_multi <- coxph(CT_os ~ TCRdmythreshold05 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_PD1my_OS_multi <- coxph(CT_os ~ PD1mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_CD8my_OS_multi <- coxph(CT_os ~ CD8mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+
+#CoxPh, thresholds from Literature for PFS
+Cox_CD3my_PF_multi <- coxph(CT_pf ~ CD3mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_HLA1my_PF_multi <- coxph(CT_pf ~ HLA1mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_PDL1my_PF_multi <- coxph(CT_pf ~ PDL1mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_LAG3my_PF_multi <- coxph(CT_pf ~ LAG3mythreshold1 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_TCRdmy_PF_multi <- coxph(CT_pf ~ TCRdmythreshold05 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_PD1my_PF_multi <- coxph(CT_pf~ PD1mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_CD8my_PF_multi <- coxph(CT_pf ~ CD8mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+
+#View the CoxPH p values and HR
+
+summary(Cox_CD3auto_OS_multi) 
+summary(Cox_HLA1auto_OS_multi) 
+summary(Cox_PDL1auto_OS_multi) 
+summary(Cox_LAG3auto_OS_multi) 
+summary(Cox_TCRdauto_OS_multi) 
+summary(Cox_PD1auto_OS_multi) 
+summary(Cox_CD8auto_OS_multi) 
+
+summary(Cox_CD3auto_PF_multi) 
+summary(Cox_HLA1auto_PF_multi) 
+summary(Cox_PDL1auto_PF_multi) 
+summary(Cox_LAG3auto_PF_multi) 
+summary(Cox_TCRdauto_PF_multi) 
+summary(Cox_PD1auto_PF_multi) 
+summary(Cox_CD8auto_PF_multi) 
+
+summary(Cox_CD3my_OS_multi) 
+summary(Cox_HLA1my_OS_multi) 
+summary(Cox_PDL1my_OS_multi) 
+summary(Cox_LAG3my_OS_multi) 
+summary(Cox_TCRdmy_OS_multi) 
+summary(Cox_PD1my_OS_multi) 
+summary(Cox_CD8my_OS_multi) 
+
+summary(Cox_CD3my_PF_multi) 
+summary(Cox_HLA1my_PF_multi) 
+summary(Cox_PDL1my_PF_multi) 
+summary(Cox_LAG3my_PF_multi) 
+summary(Cox_TCRdmy_PF_multi) 
+summary(Cox_PD1my_PF_multi) 
+summary(Cox_CD8my_PF_multi) 
+
+From this summary data, values that will be transferred to excel sheets include the HR, p value, and upper and lower 95% CI for HZ
+Label excel sheets as: 
+CoxPH_multi_autothreshold_dens_OS -> for Cutoff finder thresholds OS
+CoxPH_multi_autothreshold_dens_PF -> for Cutoff finder thresholds PF
+CoxPH_multi_mythreshold_OS.xlsx -> for literature based thresholds OS
+CoxPH_multi_mythreshold_PF -> for literature based thresholds PF
+
+#Import Hazard ratio tables into R
+CoxPH_multi_autothreshold_dens_OS  <- read_excel('CoxPH_multi_autothreshold_dens_OS.xlsx') 
+CoxPH_multi_autothreshold_dens_PF  <- read_excel('CoxPH_multi_autothreshold_dens_PF.xlsx') 
+CoxPH_multi_mythreshold_OS  <- read_excel('CoxPH_multi_mythreshold_OS.xlsx') 
+CoxPH_multi_mythreshold_PF  <- read_excel('CoxPH_multi_mythreshold_PF.xlsx') 
+
+#Graph Hazard Ratio tables as Forest Plots
+CoxPH_multi_autothreshold_dens_OS |> forestplot(labeltext = c(Marker, HR, ll, uu), boxsize = 0.2, clip = c(0.1, Inf), vertices = TRUE, xlog = TRUE) |> fp_set_style(box = "royalblue", line = "darkblue", summary = "royalblue") |> fp_add_header(Marker = c("Variable"), HR = c ("HR"), ll = c("95% LCI"), uu = c("95% UCI")) 
+CoxPH_multi_autothreshold_dens_PF |> forestplot(labeltext = c(Marker, HR, ll, uu), boxsize = 0.2, clip = c(0.1, Inf), vertices = TRUE, xlog = TRUE) |> fp_set_style(box = "royalblue", line = "darkblue", summary = "royalblue") |> fp_add_header(Marker = c("Variable"), HR = c ("HR"), ll = c("95% LCI"), uu = c("95% UCI")) 
+CoxPH_multi_mythreshold_OS |> forestplot(labeltext = c(Marker, HR, ll, uu), boxsize = 0.2, clip = c(0.1, Inf), vertices = TRUE, xlog = TRUE) |> fp_set_style(box = "royalblue", line = "darkblue", summary = "royalblue") |> fp_add_header(Marker = c("Variable"), HR = c ("Hazard Ratio"), ll = c("95% LCI"), uu = c("95% UCI")) 
+CoxPH_multi_mythreshold_PF |> forestplot(labeltext = c(Marker, HR, ll, uu), boxsize = 0.2, clip = c(0.1, Inf), vertices = TRUE, xlog = TRUE) |> fp_set_style(box = "royalblue", line = "darkblue", summary = "royalblue") |> fp_add_header(Marker = c("Variable"), HR = c ("Hazard Ratio"), ll = c("95% LCI"), uu = c("95% UCI")) 
+
+#Graph Kaplan Meier Curves
+install_github("michaelway/ggkm") 
+library(ggkm) 
+
+#makesurvival objects for each Marker
+KM_CD3_auto_OS <- survfit(Surv(Stime,alive) ~ CD3autoOS, data=CTree_OSmaster) 
+KM_CD3_auto_PF <- survfit(Surv(Ptime,progression) ~ CD3autoPF, data=CTree_OSmaster) 
+KM_HLA1_auto_OS <- survfit(Surv(Stime,alive) ~ HLA1autoOS, data=CTree_OSmaster) 
+KM_HLA1_auto_PF <- survfit(Surv(Ptime,progression) ~ HLA1autoPF, data=CTree_OSmaster) 
+KM_PDL1_auto_OS <- survfit(Surv(Stime,alive) ~ PDL1autoOS, data=CTree_OSmaster) 
+KM_PDL1_auto_PF <- survfit(Surv(Ptime,progression) ~ PDL1autoPF, data=CTree_OSmaster) 
+KM_LAG3_auto_OS <- survfit(Surv(Stime,alive) ~ LAG3autoOS, data=CTree_OSmaster) 
+KM_LAG3_auto_PF <- survfit(Surv(Ptime,progression) ~ LAG3autoPF, data=CTree_OSmaster) 
+KM_TCRd_auto_OS <- survfit(Surv(Stime,alive) ~ TCRdautoOS, data=CTree_OSmaster) 
+KM_TCRd_auto_PF <- survfit(Surv(Ptime,progression) ~ TCRdautoPF, data=CTree_OSmaster) 
+KM_PD1_auto_OS <- survfit(Surv(Stime,alive) ~ PD1autoOS, data=CTree_OSmaster) 
+KM_PD1_auto_PF <- survfit(Surv(Ptime,progression) ~ PD1autoPF, data=CTree_OSmaster) 
+KM_CD8_auto_OS <- survfit(Surv(Stime,alive) ~ CD8autoOS, data=CTree_OSmaster) 
+KM_CD8_auto_PF <- survfit(Surv(Ptime,progression) ~ CD8autoPF, data=CTree_OSmaster) 
+
+#make Kaplan Meier curves for each marker for Overall Survival
+ggkm(KM_CD3_auto_OS, table = T, ystratalabs = c("CD3-", "CD3+"), ystrataname = "Group", ylabs = "Survival(%)" , xlabs = "Time-to-death (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_HLA1_auto_OS, table = T, ystratalabs = c("HLA-I-", "HLA-I+"), ystrataname = "Group", ylabs = "Survival(%)" , xlabs = "Time-to-death (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_PDL1_auto_OS, table = T, ystratalabs = c("PD-L1-", "PD-L1+"), ystrataname = "Group", ylabs = "Survival(%)" , xlabs = "Time-to-death (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_LAG3_auto_OS, table = T, ystratalabs = c("LAG-3-", "LAG-3+"), ystrataname = "Group", ylabs = "Survival(%)" , xlabs = "Time-to-death (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_TCRd_auto_OS, table = T, ystratalabs = c("TCRδ-", "TCRδ+"), ystrataname = "Group", ylabs = "Survival(%)" , xlabs = "Time-to-death (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_PD1_auto_OS, table = T, ystratalabs = c("PD-1-", "PD-1+"), ystrataname = "Group", ylabs = "Survival(%)" , xlabs = "Time-to-death (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_CD8_auto_OS, table = T, ystratalabs = c("CD8-", "CD8+"), ystrataname = "Group", ylabs = "Survival(%)" , xlabs = "Time-to-death (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+
+#make Kaplan Meier curves for each marker for Progression-Free Survival
+ggkm(KM_CD3_auto_PF, table = T, ystratalabs = c("CD3-", "CD3+"), ystrataname = "Group", ylabs = "Progression(%)" , xlabs = "Time-to-Progression (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_HLA1_auto_PF, table = T, ystratalabs = c("HLA-I-", "HLA-I+"), ystrataname = "Group", ylabs = "Progression(%)" , xlabs = "Time-to-Progression (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_PDL1_auto_PF, table = T, ystratalabs = c("PD-L1", "PD-L1+"), ystrataname = "Group", ylabs = "Progression(%)" , xlabs = "Time-to-Progression (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_LAG3_auto_PF, table = T, ystratalabs = c("LAG-3-", "LAG-3+"), ystrataname = "Group", ylabs = "Progression(%)" , xlabs = "Time-to-Progression (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_TCRd_auto_PF, table = T, ystratalabs = c("TCRδ-", "TCRδ+"), ystrataname = "Group", ylabs = "Progression(%)" , xlabs = "Time-to-Progression (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_PD1_auto_PF, table = T, ystratalabs = c("PD-1-", "PD-1+"), ystrataname = "Group", ylabs = "Progression(%)" , xlabs = "Time-to-Progression (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+ggkm(KM_CD8_auto_PF, table = T, ystratalabs = c("CD8-", "CD8+"), ystrataname = "Group", ylabs = "Progression(%)" , xlabs = "Time-to-Progression (Months)", dashed=TRUE, shape = 4, linecols = "Set1", p=TRUE) 
+
+#Finally, we will make the conditional inference tree plots:
+require(survival) 
+require(partykit) 
+
+#You will need to make separate excel sheets, "CtreeOS" and "CtreePF" these excel sheets will only have marker densities and either OS data or PFS data
+Ctree_OS <- read_excel('CtreeOS.xlsx') 
+Ctree_PF <- read_excel('CtreePF.xlsx.') 
+(CT_PF <- ctree(Surv(Ptime, Progression) ~ ., data = Ctree_PF, control = ctree_control(mincriterion = 0.1))) 
+(CT_OS <- ctree(Surv(Stime, Survive) ~ ., data = Ctree_OS, control = ctree_control(mincriterion = 0.1))) 
+plot(CT_PF) 
+plot(CT_OS) 
