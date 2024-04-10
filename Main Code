@@ -1,4 +1,4 @@
-#You will need to convert the data in Supplemental Table 5 to an excel file and rename it as "CTree_masterlist" 
+#You will need to convert the data in Supplemental Table 4 to an excel file and rename it as "CTree_masterlist" 
 
 library(readxl) 
 library(survival) 
@@ -13,40 +13,40 @@ CT_pf <- with(CTree_OSmaster, Surv(CTree_OSmaster$Ptime, CTree_OSmaster$progress
 #Calculate Hazard Ratios and p values with multivariate CoxPH function
 
 #CoxPh, thresholds from Cutoff Finder for OS
-Cox_CD3auto_OS_multi <- coxph(CT_os ~ CD3autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_HLA1auto_OS_multi <- coxph(CT_os ~ HLA1autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_PDL1auto_OS_multi <- coxph(CT_os ~ PDL1autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_LAG3auto_OS_multi <- coxph(CT_os ~ LAG3autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_TCRdauto_OS_multi <- coxph(CT_os ~ TCRdautoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_PD1auto_OS_multi <- coxph(CT_os ~ PD1autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_CD8auto_OS_multi <- coxph(CT_os ~ CD8autoOS + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_CD3auto_OS_multi <- coxph(CT_os ~ CD3autoOS + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_HLA1auto_OS_multi <- coxph(CT_os ~ HLA1autoOS + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_PDL1auto_OS_multi <- coxph(CT_os ~ PDL1autoOS + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_LAG3auto_OS_multi <- coxph(CT_os ~ LAG3autoOS + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_TCRdauto_OS_multi <- coxph(CT_os ~ TCRdautoOS + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_PD1auto_OS_multi <- coxph(CT_os ~ PD1autoOS + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_CD8auto_OS_multi <- coxph(CT_os ~ CD8autoOS + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
 
 #CoxPh, thresholds from Cutoff Finder for PFS
-Cox_CD3auto_PF_multi <- coxph(CT_pf ~ CD3autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_HLA1auto_PF_multi <- coxph(CT_pf ~ HLA1autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_PDL1auto_PF_multi <- coxph(CT_pf ~ PDL1autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_LAG3auto_PF_multi <- coxph(CT_pf ~ LAG3autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_TCRdauto_PF_multi <- coxph(CT_pf ~ TCRdautoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_PD1auto_PF_multi <- coxph(CT_pf ~ PD1autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_CD8auto_PF_multi <- coxph(CT_pf ~ CD8autoPF + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_CD3auto_PF_multi <- coxph(CT_pf ~ CD3autoPF + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_HLA1auto_PF_multi <- coxph(CT_pf ~ HLA1autoPF + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_PDL1auto_PF_multi <- coxph(CT_pf ~ PDL1autoPF + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_LAG3auto_PF_multi <- coxph(CT_pf ~ LAG3autoPF + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_TCRdauto_PF_multi <- coxph(CT_pf ~ TCRdautoPF + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_PD1auto_PF_multi <- coxph(CT_pf ~ PD1autoPF + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_CD8auto_PF_multi <- coxph(CT_pf ~ CD8autoPF + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
 
 #CoxPh, thresholds from Literature for OS
-Cox_CD3my_OS_multi <- coxph(CT_os ~ CD3mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_HLA1my_OS_multi <- coxph(CT_os ~ HLA1mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_PDL1my_OS_multi <- coxph(CT_os ~ PDL1mythreshold5+ age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_LAG3my_OS_multi <- coxph(CT_os ~ LAG3mythreshold1 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_TCRdmy_OS_multi <- coxph(CT_os ~ TCRdmythreshold05 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_PD1my_OS_multi <- coxph(CT_os ~ PD1mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_CD8my_OS_multi <- coxph(CT_os ~ CD8mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_CD3my_OS_multi <- coxph(CT_os ~ CD3mythreshold5 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_HLA1my_OS_multi <- coxph(CT_os ~ HLA1mythreshold5 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_PDL1my_OS_multi <- coxph(CT_os ~ PDL1mythreshold5+ age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_LAG3my_OS_multi <- coxph(CT_os ~ LAG3mythreshold1 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_TCRdmy_OS_multi <- coxph(CT_os ~ TCRdmythreshold05 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_PD1my_OS_multi <- coxph(CT_os ~ PD1mythreshold5 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_CD8my_OS_multi <- coxph(CT_os ~ CD8mythreshold5 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
 
 #CoxPh, thresholds from Literature for PFS
-Cox_CD3my_PF_multi <- coxph(CT_pf ~ CD3mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_HLA1my_PF_multi <- coxph(CT_pf ~ HLA1mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_PDL1my_PF_multi <- coxph(CT_pf ~ PDL1mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_LAG3my_PF_multi <- coxph(CT_pf ~ LAG3mythreshold1 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_TCRdmy_PF_multi <- coxph(CT_pf ~ TCRdmythreshold05 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_PD1my_PF_multi <- coxph(CT_pf~ PD1mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
-Cox_CD8my_PF_multi <- coxph(CT_pf ~ CD8mythreshold5 + age + sex + primary_met + pathstage, data = CTree_OSmaster) 
+Cox_CD3my_PF_multi <- coxph(CT_pf ~ CD3mythreshold5 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_HLA1my_PF_multi <- coxph(CT_pf ~ HLA1mythreshold5 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_PDL1my_PF_multi <- coxph(CT_pf ~ PDL1mythreshold5 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_LAG3my_PF_multi <- coxph(CT_pf ~ LAG3mythreshold1 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_TCRdmy_PF_multi <- coxph(CT_pf ~ TCRdmythreshold05 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_PD1my_PF_multi <- coxph(CT_pf~ PD1mythreshold5 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
+Cox_CD8my_PF_multi <- coxph(CT_pf ~ CD8mythreshold5 + age + sex + primary_met + pathstage + Immune, data = CTree_OSmaster) 
 
 #View the CoxPH p values and HR
 
